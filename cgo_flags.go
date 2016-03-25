@@ -3,7 +3,7 @@
 package jemalloc
 
 // #cgo CFLAGS: -Iinternal/include
-// #cgo linux CFLAGS: -DJEMALLOC_PURGE_MADVISE_DONTNEED
-// #cgo darwin CFLAGS: -DJEMALLOC_OSATOMIC -DJEMALLOC_OSSPIN -DJEMALLOC_PURGE_MADVISE_FREE -DJEMALLOC_HAVE_ISSETUGID
-// #cgo darwin CFLAGS: -DJEMALLOC_ZONE -DJEMALLOC_ZONE_VERSION=8
+// #cgo darwin CFLAGS: -Idarwin_includes/internal/include -Idarwin_includes/internal/include/jemalloc/internal
+// #cgo linux CFLAGS: -Ilinux_includes/internal/include -Ilinux_includes/internal/include/jemalloc/internal
+// #cgo LDFLAGS: -lm
 import "C"

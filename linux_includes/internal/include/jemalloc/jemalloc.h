@@ -8,10 +8,10 @@ extern "C" {
 #define	JEMALLOC_HAVE_ATTR
 
 /* Defined if alloc_size attribute is supported. */
-/* #undef JEMALLOC_HAVE_ATTR_ALLOC_SIZE */
+#define	JEMALLOC_HAVE_ATTR_ALLOC_SIZE
 
 /* Defined if format(gnu_printf, ...) attribute is supported. */
-/* #undef JEMALLOC_HAVE_ATTR_FORMAT_GNU_PRINTF */
+#define	JEMALLOC_HAVE_ATTR_FORMAT_GNU_PRINTF
 
 /* Defined if format(printf, ...) attribute is supported. */
 #define	JEMALLOC_HAVE_ATTR_FORMAT_PRINTF
@@ -20,7 +20,7 @@ extern "C" {
  * Define overrides for non-standard allocator-related functions if they are
  * present on the system.
  */
-/* #undef JEMALLOC_OVERRIDE_MEMALIGN */
+#define	JEMALLOC_OVERRIDE_MEMALIGN
 #define	JEMALLOC_OVERRIDE_VALLOC
 
 /*
@@ -30,14 +30,22 @@ extern "C" {
  *
  * Match the operating system's prototype.
  */
-#define	JEMALLOC_USABLE_SIZE_CONST const
+#define	JEMALLOC_USABLE_SIZE_CONST
 
 /*
  * If defined, specify throw() for the public function prototypes when compiling
  * with C++.  The only justification for this is to match the prototypes that
  * glibc defines.
  */
-/* #undef JEMALLOC_USE_CXX_THROW */
+#define	JEMALLOC_USE_CXX_THROW
+
+#ifdef _MSC_VER
+#  ifdef _WIN64
+#    define LG_SIZEOF_PTR_WIN 3
+#  else
+#    define LG_SIZEOF_PTR_WIN 2
+#  endif
+#endif
 
 /* sizeof(void *) == 2^LG_SIZEOF_PTR. */
 #define	LG_SIZEOF_PTR 3
@@ -68,6 +76,7 @@ extern "C" {
 #  define je_mallctlbymib mallctlbymib
 #  define je_malloc_stats_print malloc_stats_print
 #  define je_malloc_usable_size malloc_usable_size
+#  define je_memalign memalign
 #  define je_valloc valloc
 #endif
 
@@ -84,12 +93,13 @@ extern "C" {
 #define	JEMALLOC_VERSION_NREV 0
 #define	JEMALLOC_VERSION_GID "0000000000000000000000000000000000000000"
 
-#  define MALLOCX_LG_ALIGN(la)	(la)
+#  define MALLOCX_LG_ALIGN(la)	((int)(la))
 #  if LG_SIZEOF_PTR == 2
-#    define MALLOCX_ALIGN(a)	(ffs(a)-1)
+#    define MALLOCX_ALIGN(a)	((int)(ffs(a)-1))
 #  else
 #    define MALLOCX_ALIGN(a)						\
-	 ((a < (size_t)INT_MAX) ? ffs(a)-1 : ffs(a>>32)+31)
+       ((int)(((a) < (size_t)INT_MAX) ? ffs((int)(a))-1 :		\
+       ffs((int)((a)>>32))+31))
 #  endif
 #  define MALLOCX_ZERO	((int)0x40)
 /*
@@ -109,32 +119,7 @@ extern "C" {
 #  define JEMALLOC_CXX_THROW
 #endif
 
-#ifdef JEMALLOC_HAVE_ATTR
-#  define JEMALLOC_ATTR(s) __attribute__((s))
-#  define JEMALLOC_ALIGNED(s) JEMALLOC_ATTR(aligned(s))
-#  ifdef JEMALLOC_HAVE_ATTR_ALLOC_SIZE
-#    define JEMALLOC_ALLOC_SIZE(s) JEMALLOC_ATTR(alloc_size(s))
-#    define JEMALLOC_ALLOC_SIZE2(s1, s2) JEMALLOC_ATTR(alloc_size(s1, s2))
-#  else
-#    define JEMALLOC_ALLOC_SIZE(s)
-#    define JEMALLOC_ALLOC_SIZE2(s1, s2)
-#  endif
-#  ifndef JEMALLOC_EXPORT
-#    define JEMALLOC_EXPORT JEMALLOC_ATTR(visibility("default"))
-#  endif
-#  ifdef JEMALLOC_HAVE_ATTR_FORMAT_GNU_PRINTF
-#    define JEMALLOC_FORMAT_PRINTF(s, i) JEMALLOC_ATTR(format(gnu_printf, s, i))
-#  elif defined(JEMALLOC_HAVE_ATTR_FORMAT_PRINTF)
-#    define JEMALLOC_FORMAT_PRINTF(s, i) JEMALLOC_ATTR(format(printf, s, i))
-#  else
-#    define JEMALLOC_FORMAT_PRINTF(s, i)
-#  endif
-#  define JEMALLOC_NOINLINE JEMALLOC_ATTR(noinline)
-#  define JEMALLOC_NOTHROW JEMALLOC_ATTR(nothrow)
-#  define JEMALLOC_SECTION(s) JEMALLOC_ATTR(section(s))
-#  define JEMALLOC_RESTRICT_RETURN
-#  define JEMALLOC_ALLOCATOR
-#elif _MSC_VER
+#if _MSC_VER
 #  define JEMALLOC_ATTR(s)
 #  define JEMALLOC_ALIGNED(s) __declspec(align(s))
 #  define JEMALLOC_ALLOC_SIZE(s)
@@ -160,6 +145,31 @@ extern "C" {
 #  else
 #    define JEMALLOC_ALLOCATOR
 #  endif
+#elif defined(JEMALLOC_HAVE_ATTR)
+#  define JEMALLOC_ATTR(s) __attribute__((s))
+#  define JEMALLOC_ALIGNED(s) JEMALLOC_ATTR(aligned(s))
+#  ifdef JEMALLOC_HAVE_ATTR_ALLOC_SIZE
+#    define JEMALLOC_ALLOC_SIZE(s) JEMALLOC_ATTR(alloc_size(s))
+#    define JEMALLOC_ALLOC_SIZE2(s1, s2) JEMALLOC_ATTR(alloc_size(s1, s2))
+#  else
+#    define JEMALLOC_ALLOC_SIZE(s)
+#    define JEMALLOC_ALLOC_SIZE2(s1, s2)
+#  endif
+#  ifndef JEMALLOC_EXPORT
+#    define JEMALLOC_EXPORT JEMALLOC_ATTR(visibility("default"))
+#  endif
+#  ifdef JEMALLOC_HAVE_ATTR_FORMAT_GNU_PRINTF
+#    define JEMALLOC_FORMAT_PRINTF(s, i) JEMALLOC_ATTR(format(gnu_printf, s, i))
+#  elif defined(JEMALLOC_HAVE_ATTR_FORMAT_PRINTF)
+#    define JEMALLOC_FORMAT_PRINTF(s, i) JEMALLOC_ATTR(format(printf, s, i))
+#  else
+#    define JEMALLOC_FORMAT_PRINTF(s, i)
+#  endif
+#  define JEMALLOC_NOINLINE JEMALLOC_ATTR(noinline)
+#  define JEMALLOC_NOTHROW JEMALLOC_ATTR(nothrow)
+#  define JEMALLOC_SECTION(s) JEMALLOC_ATTR(section(s))
+#  define JEMALLOC_RESTRICT_RETURN
+#  define JEMALLOC_ALLOCATOR
 #else
 #  define JEMALLOC_ATTR(s)
 #  define JEMALLOC_ALIGNED(s)
@@ -330,6 +340,7 @@ typedef struct {
 #  define mallctlbymib je_mallctlbymib
 #  define malloc_stats_print je_malloc_stats_print
 #  define malloc_usable_size je_malloc_usable_size
+#  define memalign je_memalign
 #  define valloc je_valloc
 #endif
 
@@ -361,6 +372,7 @@ typedef struct {
 #  undef je_mallctlbymib
 #  undef je_malloc_stats_print
 #  undef je_malloc_usable_size
+#  undef je_memalign
 #  undef je_valloc
 #endif
 
