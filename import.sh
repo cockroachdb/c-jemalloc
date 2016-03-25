@@ -3,7 +3,7 @@
 set -eu
 
 rm -rf *.c internal/*
-curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.0.4/jemalloc-4.0.4.tar.bz2 | tar jxf - -C internal --strip-components=1
+curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.1.0/jemalloc-4.1.0.tar.bz2 | tar jxf - -C internal --strip-components=1
 
 # You need to manually run the following code.
 # on OSX:
