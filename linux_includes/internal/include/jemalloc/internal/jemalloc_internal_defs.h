@@ -232,7 +232,7 @@
 #define JEMALLOC_HAS_ALLOCA_H 1
 
 /* C99 restrict keyword supported. */
-/* #undef JEMALLOC_HAS_RESTRICT 1 */
+#define JEMALLOC_HAS_RESTRICT 1
 
 /* For use by hash code. */
 /* #undef JEMALLOC_BIG_ENDIAN */
