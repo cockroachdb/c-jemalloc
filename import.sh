@@ -18,6 +18,12 @@ curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.1.0/jemalloc-4
 # <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
 # rm -r linux_includes
 # git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % linux_includes/
+#
+# on FreeBSD:
+# (cd internal && ./configure --enable-prof)
+# <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
+# rm -r freebsd_includes
+# git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % freebsd_includes/
 
 # symlink so cgo compiles them
 for source_file in $(make sources); do
