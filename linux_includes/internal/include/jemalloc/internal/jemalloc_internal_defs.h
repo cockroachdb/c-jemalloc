@@ -24,7 +24,7 @@
 #define CPU_SPINWAIT __asm__ volatile("pause")
 
 /* Defined if C11 atomics are available. */
-/* #undef JEMALLOC_C11ATOMICS */
+#define JEMALLOC_C11ATOMICS 1
 
 /* Defined if the equivalent of FreeBSD's atomic(9) functions are available. */
 /* #undef JEMALLOC_ATOMIC9 */
@@ -62,10 +62,18 @@
 #define JEMALLOC_HAVE_MADVISE 
 
 /*
+ * Defined if os_unfair_lock_*() functions are available, as provided by Darwin.
+ */
+/* #undef JEMALLOC_OS_UNFAIR_LOCK */
+
+/*
  * Defined if OSSpin*() functions are available, as provided by Darwin, and
  * documented in the spinlock(3) manual page.
  */
 /* #undef JEMALLOC_OSSPIN */
+
+/* Defined if syscall(2) is available. */
+#define JEMALLOC_HAVE_SYSCALL 
 
 /*
  * Defined if secure_getenv(3) is available.
@@ -76,6 +84,21 @@
  * Defined if issetugid(2) is available.
  */
 /* #undef JEMALLOC_HAVE_ISSETUGID */
+
+/*
+ * Defined if clock_gettime(CLOCK_MONOTONIC_COARSE, ...) is available.
+ */
+#define JEMALLOC_HAVE_CLOCK_MONOTONIC_COARSE 1
+
+/*
+ * Defined if clock_gettime(CLOCK_MONOTONIC, ...) is available.
+ */
+#define JEMALLOC_HAVE_CLOCK_MONOTONIC 1
+
+/*
+ * Defined if mach_absolute_time() is available.
+ */
+/* #undef JEMALLOC_HAVE_MACH_ABSOLUTE_TIME */
 
 /*
  * Defined if _malloc_thread_cleanup() exists.  At least in the case of
@@ -190,6 +213,12 @@
 #define JEMALLOC_TLS 
 
 /*
+ * Used to mark unreachable code to quiet "end of non-void" compiler warnings.
+ * Don't use this directly; instead use unreachable() from util.h
+ */
+#define JEMALLOC_INTERNAL_UNREACHABLE __builtin_unreachable
+
+/*
  * ffs*() functions to use for bitmapping.  Don't use these directly; instead,
  * use ffs_*() from util.h.
  */
@@ -214,6 +243,15 @@
  */
 /* #undef JEMALLOC_ZONE */
 /* #undef JEMALLOC_ZONE_VERSION */
+
+/*
+ * Methods for determining whether the OS overcommits.
+ * JEMALLOC_PROC_SYS_VM_OVERCOMMIT_MEMORY: Linux's
+ *                                         /proc/sys/vm.overcommit_memory file.
+ * JEMALLOC_SYSCTL_VM_OVERCOMMIT: FreeBSD's vm.overcommit sysctl.
+ */
+/* #undef JEMALLOC_SYSCTL_VM_OVERCOMMIT */
+#define JEMALLOC_PROC_SYS_VM_OVERCOMMIT_MEMORY 
 
 /*
  * Methods for purging unused pages differ between operating systems.

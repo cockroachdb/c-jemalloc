@@ -5,7 +5,7 @@ set -eu
 
 rm -rf internal/*
 find . -type l -not -path './.git/*' -exec rm {} \;
-curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.1.0/jemalloc-4.1.0.tar.bz2 | tar jxf - -C internal --strip-components=1
+curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.3.1/jemalloc-4.3.1.tar.bz2 | tar jxf - -C internal --strip-components=1
 
 # You need to manually run the following code.
 # on OSX:
