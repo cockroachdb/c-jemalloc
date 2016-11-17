@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 
+MAKE=${MAKE:-make}
 set -eu
 
 rm -rf internal/*
-find . -type l -not -path './.git/*' | xargs rm
+find . -type l -not -path './.git/*' -exec rm {} \;
 curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.1.0/jemalloc-4.1.0.tar.bz2 | tar jxf - -C internal --strip-components=1
 
 # You need to manually run the following code.
@@ -26,8 +27,8 @@ curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.1.0/jemalloc-4
 # git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % freebsd_includes/
 
 # symlink so cgo compiles them
-for source_file in $(make sources); do
-  ln -sf $source_file .
+for source_file in $($MAKE sources); do
+  ln -sf "$source_file" .
 done
 
 # restore the repo to what it would look like when first cloned.
