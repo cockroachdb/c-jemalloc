@@ -59,7 +59,7 @@
 /*
  * Defined if os_unfair_lock_*() functions are available, as provided by Darwin.
  */
-#define JEMALLOC_OS_UNFAIR_LOCK 
+/* #undef JEMALLOC_OS_UNFAIR_LOCK */
 
 /*
  * Defined if OSSpin*() functions are available, as provided by Darwin, and
@@ -68,7 +68,7 @@
 #define JEMALLOC_OSSPIN 
 
 /* Defined if syscall(2) is usable. */
-/* #undef JEMALLOC_USE_SYSCALL */
+#define JEMALLOC_USE_SYSCALL 
 
 /*
  * Defined if secure_getenv(3) is available.
