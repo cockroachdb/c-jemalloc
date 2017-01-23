@@ -21,7 +21,7 @@ curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4
 # git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % linux_glibc_includes/
 #
 # on Linux with musl:
-# (cd internal && echo 'je_cv_madv_free=no' > config.cache && ./configure --enable-prof -C && rm config.cache)
+# (cd internal && echo 'je_cv_madv_free=no' > config.cache && ./configure --enable-prof --disable-prof-libgcc -C && rm config.cache)
 # <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
 # rm -r linux_musl_includes
 # git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % linux_musl_includes/

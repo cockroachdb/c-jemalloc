@@ -146,10 +146,10 @@
 /* #undef JEMALLOC_PROF_LIBUNWIND */
 
 /* Use libgcc for profile backtracing if defined. */
-#define JEMALLOC_PROF_LIBGCC 
+/* #undef JEMALLOC_PROF_LIBGCC */
 
 /* Use gcc intrinsics for profile backtracing if defined. */
-/* #undef JEMALLOC_PROF_GCC */
+#define JEMALLOC_PROF_GCC 
 
 /*
  * JEMALLOC_TCACHE enables a thread-specific caching layer for small objects.
