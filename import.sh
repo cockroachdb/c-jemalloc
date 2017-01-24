@@ -6,6 +6,7 @@ set -eu
 rm -rf internal/*
 find . -type l -not -path './.git/*' -exec rm {} \;
 curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4.4.0.tar.bz2 | tar jxf - -C internal --strip-components=1
+patch -p1 -d internal < secure_getenv.patch
 
 # You need to manually run the following code.
 # on OSX:
