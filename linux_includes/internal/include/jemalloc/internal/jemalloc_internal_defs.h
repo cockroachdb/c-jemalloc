@@ -78,7 +78,7 @@
 /*
  * Defined if issetugid(2) is available.
  */
-#define JEMALLOC_HAVE_ISSETUGID 
+/* #undef JEMALLOC_HAVE_ISSETUGID */
 
 /* Defined if pthread_atfork(3) is available. */
 #define JEMALLOC_HAVE_PTHREAD_ATFORK 
