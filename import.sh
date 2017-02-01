@@ -23,6 +23,7 @@ patch -p1 -d internal < secure_getenv.patch
 # echo 'je_cv_glibc_memalign_hook=no' >> config.cache
 # echo 'je_cv_madv_free=no' >> config.cache
 # echo 'je_cv_pthread_mutex_adaptive_np=no' >> config.cache
+# echo 'je_cv_thp=no' >> config.cache
 # ./configure --enable-prof --disable-prof-libgcc -C
 # rm config.cache
 # cd -
