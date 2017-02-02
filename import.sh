@@ -8,6 +8,11 @@ find . -type l -not -path './.git/*' -exec rm {} \;
 curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4.4.0.tar.bz2 | tar jxf - -C internal --strip-components=1
 patch -p1 -d internal < secure_getenv.patch
 
+# symlink so cgo compiles them
+for source_file in $($MAKE sources); do
+  ln -sf "$source_file" .
+done
+
 # You need to manually run the following code.
 # on OSX:
 # (cd internal && MACOSX_DEPLOYMENT_TARGET=10.9 ./configure --enable-prof --with-jemalloc-prefix='')
@@ -24,7 +29,7 @@ patch -p1 -d internal < secure_getenv.patch
 # echo 'je_cv_madv_free=no' >> config.cache
 # echo 'je_cv_pthread_mutex_adaptive_np=no' >> config.cache
 # echo 'je_cv_thp=no' >> config.cache
-# ./configure --enable-prof --disable-prof-libgcc -C
+# ./configure -C # TODO(tamird): restore --enable-prof here when https://github.com/jemalloc/jemalloc/issues/585 is resolved
 # rm config.cache
 # cd -
 # <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
@@ -36,12 +41,7 @@ patch -p1 -d internal < secure_getenv.patch
 # <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
 # rm -r freebsd_includes
 # git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % freebsd_includes/
-
-# symlink so cgo compiles them
-for source_file in $($MAKE sources); do
-  ln -sf "$source_file" .
-done
-
-# restore the repo to what it would look like when first cloned.
-# comment this line out while updating upstream.
-git clean -dxf
+#
+# After committing locally you should run the command below to ensure your repo
+# is in a clean state and then build/test cockroachdb with the new version:
+#   git clean -dxf
