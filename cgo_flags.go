@@ -3,6 +3,7 @@
 package jemalloc
 
 // #cgo CFLAGS: -Iinternal/include -std=gnu11 -pipe -g3 -fvisibility=hidden -O3 -funroll-loops
+// #cgo !musl CFLAGS: -DJEMALLOC_PROF -DJEMALLOC_PROF_LIBGCC
 // #cgo CPPFLAGS: -D_REENTRANT
 // #cgo LDFLAGS: -lm -lpthread
 // #cgo linux LDFLAGS: -lrt
