@@ -140,7 +140,7 @@
 #define JEMALLOC_STATS 
 
 /* JEMALLOC_PROF enables allocation profiling. */
-#define JEMALLOC_PROF 
+/* #undef JEMALLOC_PROF */
 
 /* Use libunwind for profile backtracing if defined. */
 /* #undef JEMALLOC_PROF_LIBUNWIND */
@@ -149,7 +149,7 @@
 /* #undef JEMALLOC_PROF_LIBGCC */
 
 /* Use gcc intrinsics for profile backtracing if defined. */
-#define JEMALLOC_PROF_GCC 
+/* #undef JEMALLOC_PROF_GCC */
 
 /*
  * JEMALLOC_TCACHE enables a thread-specific caching layer for small objects.
