@@ -223,6 +223,8 @@
 #undef extent_node_sn_set
 #undef extent_node_zeroed_get
 #undef extent_node_zeroed_set
+#undef extent_size_quantize_ceil
+#undef extent_size_quantize_floor
 #undef extent_tree_ad_destroy
 #undef extent_tree_ad_destroy_recurse
 #undef extent_tree_ad_empty
@@ -390,6 +392,7 @@
 #undef opt_redzone
 #undef opt_stats_print
 #undef opt_tcache
+#undef opt_thp
 #undef opt_utrace
 #undef opt_xmalloc
 #undef opt_zero
@@ -529,6 +532,9 @@
 #undef tcache_get
 #undef tcache_get_hard
 #undef tcache_maxclass
+#undef tcache_postfork_child
+#undef tcache_postfork_parent
+#undef tcache_prefork
 #undef tcache_salloc
 #undef tcache_stats_merge
 #undef tcaches
@@ -612,14 +618,16 @@
 #undef valgrind_make_mem_defined
 #undef valgrind_make_mem_noaccess
 #undef valgrind_make_mem_undefined
+#undef witness_assert_depth
+#undef witness_assert_depth_to_rank
 #undef witness_assert_lockless
 #undef witness_assert_not_owner
 #undef witness_assert_owner
+#undef witness_depth_error
 #undef witness_fork_cleanup
 #undef witness_init
 #undef witness_lock
 #undef witness_lock_error
-#undef witness_lockless_error
 #undef witness_not_owner_error
 #undef witness_owner
 #undef witness_owner_error

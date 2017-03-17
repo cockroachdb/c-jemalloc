@@ -2,7 +2,7 @@
 // jemalloc library.
 package jemalloc
 
-// #cgo CPPFLAGS: -Iinternal/include -std=gnu11 -pipe -g3 -fvisibility=hidden -O3 -funroll-loops
+// #cgo CPPFLAGS: -Iinternal/include -std=gnu11
 // #cgo !musl CPPFLAGS: -DJEMALLOC_PROF -DJEMALLOC_PROF_LIBGCC
 // #cgo CPPFLAGS: -D_REENTRANT
 // #cgo !darwin LDFLAGS: -lm -lpthread
