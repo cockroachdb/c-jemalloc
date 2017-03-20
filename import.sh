@@ -18,7 +18,7 @@ done
 
 # You need to manually run the following code.
 # on OSX:
-# (cd internal && MACOSX_DEPLOYMENT_TARGET=10.9 ./configure --enable-prof --with-jemalloc-prefix='')
+# (cd internal && MACOSX_DEPLOYMENT_TARGET=10.9 ./configure)
 # <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
 # rm -r darwin_includes
 # git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % darwin_includes/
@@ -40,7 +40,7 @@ done
 # git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % linux_includes/
 #
 # on FreeBSD:
-# (cd internal && ./configure --enable-prof)
+# (cd internal && ./configure)
 # <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
 # rm -r freebsd_includes
 # git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % freebsd_includes/
