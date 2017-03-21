@@ -5,8 +5,7 @@ set -eu
 
 rm -rf internal/*
 find . -type l -not -path './.git/*' -exec rm {} \;
-curl -sL https://github.com/jemalloc/jemalloc/releases/download/4.4.0/jemalloc-4.4.0.tar.bz2 | tar jxf - -C internal --strip-components=1
-patch -p1 -d internal < secure_getenv.patch
+curl -sfSL https://github.com/jemalloc/jemalloc/releases/download/4.5.0/jemalloc-4.5.0.tar.bz2 | tar jxf - -C internal --strip-components=1
 
 # symlink so cgo compiles them
 for source_file in $($MAKE sources); do
@@ -47,4 +46,4 @@ done
 #
 # After committing locally you should run the command below to ensure your repo
 # is in a clean state and then build/test cockroachdb with the new version:
-#   git clean -dxf
+#   git clean -dXf
