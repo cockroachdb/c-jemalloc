@@ -11,4 +11,5 @@ package jemalloc
 // #cgo darwin CPPFLAGS: -Idarwin_includes/internal/include -Idarwin_includes/internal/include/jemalloc/internal -fno-omit-frame-pointer
 // #cgo linux CPPFLAGS: -Ilinux_includes/internal/include -Ilinux_includes/internal/include/jemalloc/internal
 // #cgo freebsd CPPFLAGS: -Ifreebsd_includes/internal/include -Ifreebsd_includes/internal/include/jemalloc/internal
+// #cgo openbsd CPPFLAGS: -Iopenbsd_includes/internal/include -Iopenbsd_includes/internal/include/jemalloc/internal
 import "C"

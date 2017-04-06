@@ -44,6 +44,12 @@ done
 # rm -r freebsd_includes
 # git ls-files -io --exclude-standard -- internal/include | xargs -I % rsync -R % freebsd_includes/
 #
+# on OpenBSD:
+# (cd internal && ./configure)
+# <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
+# rm -r openbsd_includes
+# git ls-files -io --exclude-standard -- internal/include | xargs -I % rsync -R % openbsd_includes/
+#
 # After committing locally you should run the command below to ensure your repo
 # is in a clean state and then build/test cockroachdb with the new version:
 #   git clean -dXf
