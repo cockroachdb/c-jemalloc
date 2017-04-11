@@ -7,8 +7,9 @@ rm -rf internal/*
 find . -type l -not -path './.git/*' -exec rm {} \;
 curl -sfSL https://github.com/jemalloc/jemalloc/releases/download/4.5.0/jemalloc-4.5.0.tar.bz2 | tar jxf - -C internal --strip-components=1
 
-# symlink so cgo compiles them
-for source_file in $($MAKE sources); do
+# symlink source files so cgo compiles them. Link the license to make
+# it more discoverable in this repo.
+for source_file in $($MAKE sources) internal/COPYING; do
   ln -sf "$source_file" .
 done
 
