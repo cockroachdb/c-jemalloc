@@ -21,7 +21,7 @@ done
 # (cd internal && MACOSX_DEPLOYMENT_TARGET=10.9 ./configure)
 # <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
 # rm -r darwin_includes
-# git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % darwin_includes/
+# git ls-files -io --exclude-standard -- internal/include | xargs -I % rsync -R % darwin_includes/
 #
 # on Linux:
 # cd internal
@@ -37,13 +37,19 @@ done
 # cd -
 # <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
 # rm -r linux_includes
-# git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % linux_includes/
+# git ls-files -io --exclude-standard -- internal/include | xargs -I % rsync -R % linux_includes/
 #
 # on FreeBSD:
 # (cd internal && ./configure)
 # <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
 # rm -r freebsd_includes
-# git clean -Xn -- internal/include/jemalloc | sed 's/.* //' | xargs -I % rsync -R % freebsd_includes/
+# git ls-files -io --exclude-standard -- internal/include | xargs -I % rsync -R % freebsd_includes/
+#
+# on OpenBSD:
+# (cd internal && ./configure)
+# <compare "Build parameters" in internal/Makefile to cgo flags in cgo_flags.go> and adjust the latter.
+# rm -r openbsd_includes
+# git ls-files -io --exclude-standard -- internal/include | xargs -I % rsync -R % openbsd_includes/
 #
 # After committing locally you should run the command below to ensure your repo
 # is in a clean state and then build/test cockroachdb with the new version:
