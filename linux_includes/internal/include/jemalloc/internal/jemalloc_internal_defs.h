@@ -21,7 +21,11 @@
  * Hyper-threaded CPUs may need a special instruction inside spin loops in
  * order to yield to another virtual CPU.
  */
+#if defined(__powerpc64__)
+#define CPU_SPINWAIT __asm__ volatile("or 31,31,31")
+#else
 #define CPU_SPINWAIT __asm__ volatile("pause")
+#endif
 
 /* Defined if C11 atomics are available. */
 #define JEMALLOC_C11ATOMICS 1

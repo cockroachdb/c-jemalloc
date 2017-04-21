@@ -338,6 +338,7 @@ case "${host_cpu}" in
 	;;
   powerpc)
 	AC_DEFINE_UNQUOTED([HAVE_ALTIVEC], [ ])
+    CPU_SPINWAIT='__asm__ volatile("or 31,31,31")'
 	;;
   *)
 	;;
